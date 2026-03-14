@@ -252,9 +252,9 @@ const LoginPage = ({ setPage }) => {
                 <label style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13px", color: "#777", cursor: "pointer" }}>
                   <input type="checkbox" style={{ accentColor: "var(--au-red)" }} /> Remember me
                 </label>
-                <button type="button" style={{ background: "none", border: "none", cursor: "pointer", fontSize: "13px", color: "var(--au-navy)", fontWeight: 700 }}>
-                  Forgot password?
-                </button>
+               <button onClick={() => setPage("forgot-password")} className="font-bold hover:underline" style={{ color: "var(--au-red)" }}>
+  Forgot password?
+</button>
               </div>
 
               {/* Error */}

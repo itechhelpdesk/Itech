@@ -7,6 +7,7 @@ import LoginPage        from "./components/LoginPage";
 import RegisterPage     from "./components/Registerpage";
 import StudentDashboard from "./Studentdashboard/Studentdashboard";
 import AdminDashboard from "./AdminDashboard/AdminDashboard";
+import ForgotPasswordPage from "./components/ForgotPassword";
 
 function App() {
   const [page, setPage] = useState(() => {
@@ -32,6 +33,7 @@ function App() {
       {page === "register"  && <RegisterPage     setPage={navigate} />}
       {page === "dashboard" && <StudentDashboard setPage={navigate} />}
       {page === "admin"     && <AdminDashboard   setPage={navigate} />}
+       {page === "forgot-password" && <ForgotPasswordPage setPage={navigate} />}
     </div>
   );
 }

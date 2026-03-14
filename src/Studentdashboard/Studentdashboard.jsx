@@ -178,81 +178,81 @@ const TicketViewModal = ({ ticket, onClose }) => {
   const progressPct = ticket.status === "Open" ? 20 : ticket.status === "Pending" ? 55 : 100;
 
   return (
-<div className="fixed inset-0 z-40 flex items-end sm:items-center justify-center p-4 pt-20" onClick={onClose}>      <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" />
+<div className="fixed inset-0 z-40 flex items-end justify-center p-4 pt-20 sm:items-center" onClick={onClose}>      <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" />
       <div className="relative bg-white rounded-3xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden flex flex-col" onClick={e => e.stopPropagation()}>
-        <div className="au-modal-header flex items-center justify-between px-6 py-4 border-b border-white/10">
+        <div className="flex items-center justify-between px-6 py-4 border-b au-modal-header border-white/10">
           <div className="flex items-center gap-3">
-            <div className="au-modal-header-icon w-9 h-9 rounded-xl flex items-center justify-center"><i className="fa-solid fa-ticket text-white text-sm" /></div>
-            <div><p className="font-extrabold text-white text-sm">#{ticket.ticketId}</p><p className="text-white/50 text-xs">{formatDate(ticket.createdAt)}</p></div>
+            <div className="flex items-center justify-center au-modal-header-icon w-9 h-9 rounded-xl"><i className="text-sm text-white fa-solid fa-ticket" /></div>
+            <div><p className="text-sm font-extrabold text-white">#{ticket.ticketId}</p><p className="text-xs text-white/50">{formatDate(ticket.createdAt)}</p></div>
           </div>
           <div className="flex items-center gap-2">
             <Badge label={ticket.status}   cls={`${statusStyle[ticket.status]} !text-xs`} />
             <Badge label={ticket.priority} cls={`${priorityStyle[ticket.priority]} !text-xs`} />
-            <button onClick={onClose} className="ml-2 w-8 h-8 bg-white/15 hover:bg-white/25 rounded-xl flex items-center justify-center transition"><i className="fa-solid fa-xmark text-white text-sm" /></button>
+            <button onClick={onClose} className="flex items-center justify-center w-8 h-8 ml-2 transition bg-white/15 hover:bg-white/25 rounded-xl"><i className="text-sm text-white fa-solid fa-xmark" /></button>
           </div>
         </div>
-        <div className="flex-1 overflow-hidden flex flex-col lg:flex-row">
-          <div className="flex-1 overflow-y-auto p-6 border-r border-gray-100">
-            <h2 className="font-extrabold text-gray-900 text-lg mb-1">{ticket.subject}</h2>
+        <div className="flex flex-col flex-1 overflow-hidden lg:flex-row">
+          <div className="flex-1 p-6 overflow-y-auto border-r border-gray-100">
+            <h2 className="mb-1 text-lg font-extrabold text-gray-900">{ticket.subject}</h2>
             <div className="flex flex-wrap gap-2 mb-4">
-              <span className="text-xs bg-gray-100 text-gray-600 px-2.5 py-1 rounded-full font-semibold flex items-center gap-1"><i className="fa-solid fa-layer-group text-xs" /> {ticket.category}</span>
-              {ticket.hasAttachment && <span className="text-xs au-attachment-bg text-gray-600 px-2.5 py-1 rounded-full font-semibold flex items-center gap-1 border"><i className="fa-solid fa-paperclip text-xs" /> {ticket.attachmentName}</span>}
+              <span className="text-xs bg-gray-100 text-gray-600 px-2.5 py-1 rounded-full font-semibold flex items-center gap-1"><i className="text-xs fa-solid fa-layer-group" /> {ticket.category}</span>
+              {ticket.hasAttachment && <span className="text-xs au-attachment-bg text-gray-600 px-2.5 py-1 rounded-full font-semibold flex items-center gap-1 border"><i className="text-xs fa-solid fa-paperclip" /> {ticket.attachmentName}</span>}
             </div>
             <div className="mb-5">
               <div className="flex justify-between text-xs text-gray-400 font-semibold mb-1.5"><span>Progress</span><span>{progressPct}%</span></div>
-              <div className="h-2 bg-gray-100 rounded-full overflow-hidden"><div className="au-progress-bar h-full rounded-full transition-all duration-700" style={{ width: `${progressPct}%` }} /></div>
+              <div className="h-2 overflow-hidden bg-gray-100 rounded-full"><div className="h-full transition-all duration-700 rounded-full au-progress-bar" style={{ width: `${progressPct}%` }} /></div>
               <div className="flex justify-between mt-1.5">{["Submitted","In Review","Resolved"].map((s, i) => <span key={s} className={`text-xs font-bold ${progressPct >= (i===0?20:i===1?55:100) ? "au-progress-label-active" : "text-gray-300"}`}>{s}</span>)}</div>
             </div>
-            <div className="bg-gray-50 rounded-2xl p-4 mb-4">
-              <p className="text-xs font-extrabold text-gray-400 uppercase tracking-wider mb-2">Description</p>
-              <p className="text-sm text-gray-700 leading-relaxed whitespace-pre-wrap">{ticket.description}</p>
+            <div className="p-4 mb-4 bg-gray-50 rounded-2xl">
+              <p className="mb-2 text-xs font-extrabold tracking-wider text-gray-400 uppercase">Description</p>
+              <p className="text-sm leading-relaxed text-gray-700 whitespace-pre-wrap">{ticket.description}</p>
             </div>
-            <div className="rounded-2xl p-4 au-attachment-bg border">
-              <p className="text-xs font-extrabold text-gray-400 uppercase tracking-wider mb-3">Submitted By</p>
+            <div className="p-4 border rounded-2xl au-attachment-bg">
+              <p className="mb-3 text-xs font-extrabold tracking-wider text-gray-400 uppercase">Submitted By</p>
               <div className="grid grid-cols-2 gap-3">
                 {[{ label: "Name", val: ticket.studentName }, { label: "Email", val: ticket.studentEmail }, { label: "Year Level", val: ticket.yearLevel }, { label: "Section", val: ticket.section }].map(f => (
-                  <div key={f.label}><p className="text-xs text-gray-400 font-semibold">{f.label}</p><p className="text-sm font-bold text-gray-800">{f.val || "—"}</p></div>
+                  <div key={f.label}><p className="text-xs font-semibold text-gray-400">{f.label}</p><p className="text-sm font-bold text-gray-800">{f.val || "—"}</p></div>
                 ))}
               </div>
             </div>
             {ticket.adminReply && (
-              <div className="mt-4 bg-green-50 border border-green-100 rounded-2xl p-4">
+              <div className="p-4 mt-4 border border-green-100 bg-green-50 rounded-2xl">
                 <p className="text-xs font-extrabold text-green-600 uppercase tracking-wider mb-2 flex items-center gap-1.5"><i className="fa-solid fa-headset" /> Admin Response</p>
-                <p className="text-sm text-gray-700 leading-relaxed">{ticket.adminReply}</p>
+                <p className="text-sm leading-relaxed text-gray-700">{ticket.adminReply}</p>
               </div>
             )}
           </div>
-          <div className="w-full lg:w-72 bg-gray-50 overflow-y-auto p-5 shrink-0">
-            <p className="text-xs font-extrabold text-gray-400 uppercase tracking-wider mb-4 flex items-center gap-2"><i className="fa-solid fa-timeline au-section-icon" /> Activity Feed</p>
+          <div className="w-full p-5 overflow-y-auto lg:w-72 bg-gray-50 shrink-0">
+            <p className="flex items-center gap-2 mb-4 text-xs font-extrabold tracking-wider text-gray-400 uppercase"><i className="fa-solid fa-timeline au-section-icon" /> Activity Feed</p>
             <div className="relative">
               <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-gray-200" />
               <div className="space-y-5">
                 {timeline.map((item, i) => (
                   <div key={i} className="relative flex gap-3 pl-10">
                     <div className={`absolute left-0 w-8 h-8 ${item.color} rounded-full flex items-center justify-center shadow-md shrink-0`}><i className={`fa-solid ${item.icon} text-white text-xs`} /></div>
-                    <div className="bg-white rounded-2xl p-3 shadow-sm border border-gray-100 flex-1">
-                      <p className="font-extrabold text-gray-800 text-xs">{item.label}</p>
+                    <div className="flex-1 p-3 bg-white border border-gray-100 shadow-sm rounded-2xl">
+                      <p className="text-xs font-extrabold text-gray-800">{item.label}</p>
                       <p className="text-xs text-gray-400 mt-0.5 mb-1.5">{item.sub}</p>
-                      <p className="text-xs text-gray-600 leading-relaxed">{item.msg}</p>
+                      <p className="text-xs leading-relaxed text-gray-600">{item.msg}</p>
                     </div>
                   </div>
                 ))}
                 {ticket.status !== "Resolved" && ticket.status !== "Closed" && (
                   <div className="relative flex gap-3 pl-10 opacity-40">
-                    <div className="absolute left-0 w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center shrink-0"><i className="fa-solid fa-circle-check text-white text-xs" /></div>
-                    <div className="bg-white rounded-2xl p-3 border border-dashed border-gray-200 flex-1">
-                      <p className="font-extrabold text-gray-400 text-xs">Resolution Pending</p>
+                    <div className="absolute left-0 flex items-center justify-center w-8 h-8 bg-gray-300 rounded-full shrink-0"><i className="text-xs text-white fa-solid fa-circle-check" /></div>
+                    <div className="flex-1 p-3 bg-white border border-gray-200 border-dashed rounded-2xl">
+                      <p className="text-xs font-extrabold text-gray-400">Resolution Pending</p>
                       <p className="text-xs text-gray-400 mt-0.5">Waiting for admin response...</p>
                     </div>
                   </div>
                 )}
               </div>
             </div>
-            <div className="mt-6 pt-4 au-border-top border-t space-y-2">
-              <p className="text-xs font-extrabold text-gray-400 uppercase tracking-wider mb-3">Ticket Info</p>
+            <div className="pt-4 mt-6 space-y-2 border-t au-border-top">
+              <p className="mb-3 text-xs font-extrabold tracking-wider text-gray-400 uppercase">Ticket Info</p>
               {[{ label: "Ticket ID", val: `#${ticket.ticketId}`, mono: true }, { label: "Category", val: ticket.category }, { label: "Priority", val: ticket.priority }, { label: "Status", val: ticket.status }, { label: "Submitted", val: formatDate(ticket.createdAt) }].map(f => (
-                <div key={f.label} className="flex justify-between items-center">
-                  <span className="text-xs text-gray-400 font-semibold">{f.label}</span>
+                <div key={f.label} className="flex items-center justify-between">
+                  <span className="text-xs font-semibold text-gray-400">{f.label}</span>
                   <span className={`text-xs font-bold text-gray-700 ${f.mono ? "font-mono au-ticket-id" : ""}`}>{f.val}</span>
                 </div>
               ))}
@@ -268,19 +268,26 @@ const TicketViewModal = ({ ticket, onClose }) => {
    NEW TICKET MODAL  ← ✅ DYNAMIC CATEGORY + SUBJECT DROPDOWN
 ════════════════════════════════════════════════════════ */
 const NewTicketModal = ({ onClose, student }) => {
-  const [form, setForm]           = useState({ category: "", priority: "Medium", subject: "", description: "" });
+  const [form, setForm]           = useState({ category: "", priority: "", subject: "", description: "" });
   const [attachedFile, setAttach] = useState(null);
   const [attachError, setAErr]    = useState("");
   const [dragging, setDragging]   = useState(false);
   const [submitting, setSubmit]   = useState(false);
   const [submitted, setDone]      = useState(false);
   const [formError, setFErr]      = useState("");
-
-  // ── Categories from Firestore (enabled only, sorted by order) ──
+ 
+  // ── Categories from Firestore ──
   const [categories,  setCategories]  = useState([]);
   const [loadingCats, setLoadingCats] = useState(true);
-
+ 
+  // ── Priorities from Firestore ──
+  const [priorities,     setPriorities]     = useState([]);
+  const [loadingPrios,   setLoadingPrios]   = useState(true);
+ 
+  const FALLBACK_PRIORITIES = ["Low", "Medium", "High", "Urgent"];
+ 
   useEffect(() => {
+    // fetch categories
     getDocs(collection(db, "settings/config/categories"))
       .then(snap => {
         const cats = snap.docs
@@ -291,19 +298,35 @@ const NewTicketModal = ({ onClose, student }) => {
       })
       .catch(console.error)
       .finally(() => setLoadingCats(false));
-  }, []);
+ 
+    // fetch priorities
+    getDocs(collection(db, "settings/config/priorities"))
+      .then(snap => {
+        const prios = snap.docs
+          .map(d => ({ id: d.id, ...d.data() }))
+          .filter(p => p.enabled !== false)
+          .sort((a, b) => (a.order ?? 999) - (b.order ?? 999) || a.name.localeCompare(b.name));
+        setPriorities(prios);
 
-  // All subjects flat across all categories: { label, categoryName }
+      })
+      .catch(console.error)
+      .finally(() => setLoadingPrios(false));
+  }, []);
+ 
+  // Resolved priority list: DB list if available, otherwise hardcoded fallback
+  const priorityOptions = priorities.length > 0
+    ? priorities.map(p => p.name)
+    : FALLBACK_PRIORITIES;
+ 
+  // All subjects flat across all categories
   const allSubjects = categories.flatMap(cat =>
     (cat.subjects || []).map(sub => ({ label: sub, categoryName: cat.name }))
   );
-
-  // Filtered by selected category — if none selected, show ALL subjects
+ 
   const filteredSubjects = form.category
     ? allSubjects.filter(s => s.categoryName === form.category)
     : allSubjects;
-
-  // When subject picked → auto-fill category if not yet chosen
+ 
   const handleSubjectChange = (e) => {
     const val = e.target.value;
     setForm(f => {
@@ -314,8 +337,7 @@ const NewTicketModal = ({ onClose, student }) => {
       return { ...f, subject: val };
     });
   };
-
-  // When category changes → reset subject only if it doesn't belong to new category
+ 
   const handleCategoryChange = (e) => {
     const newCat = e.target.value;
     setForm(f => {
@@ -323,15 +345,15 @@ const NewTicketModal = ({ onClose, student }) => {
       return { ...f, category: newCat, subject: subStillValid ? f.subject : "" };
     });
   };
-
+ 
   useEffect(() => {
     const esc = (e) => { if (e.key === "Escape") onClose(); };
     document.addEventListener("keydown", esc);
     return () => document.removeEventListener("keydown", esc);
   }, [onClose]);
-
+ 
   const handle = (e) => setForm({ ...form, [e.target.name]: e.target.value });
-
+ 
   const processFile = async (file) => {
     setAErr("");
     if (!ALLOWED_TYPES.includes(file.type)) { setAErr("Only PNG, JPG, or PDF files allowed."); return; }
@@ -339,17 +361,17 @@ const NewTicketModal = ({ onClose, student }) => {
     try { const b64 = await fileToBase64(file); setAttach({ name: file.name, type: file.type, size: file.size, base64: b64 }); }
     catch { setAErr("Could not read file."); }
   };
-
+ 
   const onFileInput = (e) => { if (e.target.files[0]) processFile(e.target.files[0]); e.target.value = ""; };
   const onDrop      = (e) => { e.preventDefault(); setDragging(false); if (e.dataTransfer.files[0]) processFile(e.dataTransfer.files[0]); };
-
+ 
   const handleSubmit = async (e) => {
     e.preventDefault(); setFErr("");
     if (!form.category || !form.subject || !form.description) { setFErr("Please fill in all required fields."); return; }
     setSubmit(true);
     try {
       const ticketId = generateTicketId();
-
+ 
       const ticketRef = await addDoc(collection(db, "tickets"), {
         ticketId,
         studentUid:     auth.currentUser?.uid ?? "",
@@ -369,7 +391,7 @@ const NewTicketModal = ({ onClose, student }) => {
         createdAt:      serverTimestamp(),
         updatedAt:      serverTimestamp(),
       });
-
+ 
       await createTicketNotifications({
         studentUid:   auth.currentUser?.uid ?? "",
         studentName:  student?.name         ?? "Student",
@@ -379,7 +401,7 @@ const NewTicketModal = ({ onClose, student }) => {
         subject:      form.subject,
         category:     form.category,
       });
-
+ 
       setDone(true);
       setTimeout(() => { setDone(false); onClose(); }, 2000);
     } catch (err) {
@@ -389,38 +411,40 @@ const NewTicketModal = ({ onClose, student }) => {
       setSubmit(false);
     }
   };
-
+ 
   const inp = "au-inp w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none bg-white";
-
+ 
   return (
-<div className="fixed inset-0 z-40 flex items-end sm:items-center justify-center p-4 pt-20" onClick={onClose}>      <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" />
-<div className="relative bg-white rounded-3xl shadow-2xl w-full max-w-2xl max-h-[calc(100vh-80px)] flex flex-col overflow-hidden" onClick={e => e.stopPropagation()}>        <div className="au-modal-header flex items-center justify-between px-6 py-4 border-b border-white/10 shrink-0">
+    <div className="fixed inset-0 z-40 flex items-end justify-center p-4 pt-20 sm:items-center" onClick={onClose}>
+      <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" />
+      <div className="relative bg-white rounded-3xl shadow-2xl w-full max-w-2xl max-h-[calc(100vh-80px)] flex flex-col overflow-hidden" onClick={e => e.stopPropagation()}>
+        <div className="flex items-center justify-between px-6 py-4 border-b au-modal-header border-white/10 shrink-0">
           <div className="flex items-center gap-3">
-            <div className="au-modal-header-icon w-9 h-9 rounded-xl flex items-center justify-center"><i className="fa-solid fa-ticket text-white" /></div>
-            <div><p className="font-extrabold text-white">Submit a New Ticket</p><p className="text-white/50 text-xs">Fill in the form below</p></div>
+            <div className="flex items-center justify-center au-modal-header-icon w-9 h-9 rounded-xl"><i className="text-white fa-solid fa-ticket" /></div>
+            <div><p className="font-extrabold text-white">Submit a New Ticket</p><p className="text-xs text-white/50">Fill in the form below</p></div>
           </div>
-          <button onClick={onClose} className="w-8 h-8 bg-white/15 hover:bg-white/25 rounded-xl flex items-center justify-center transition"><i className="fa-solid fa-xmark text-white" /></button>
+          <button onClick={onClose} className="flex items-center justify-center w-8 h-8 transition bg-white/15 hover:bg-white/25 rounded-xl"><i className="text-white fa-solid fa-xmark" /></button>
         </div>
-
-        <div className="flex-1 overflow-y-auto p-6">
+ 
+        <div className="flex-1 p-6 overflow-y-auto">
           {submitted ? (
             <div className="flex flex-col items-center justify-center py-16">
-              <div className="w-20 h-20 au-success-bg rounded-full flex items-center justify-center mb-4"><i className="fa-solid fa-circle-check au-success-icon text-4xl" /></div>
-              <p className="font-extrabold text-gray-800 text-lg">Ticket Submitted!</p>
-              <p className="text-gray-400 text-sm mt-1">You'll receive a notification shortly.</p>
+              <div className="flex items-center justify-center w-20 h-20 mb-4 rounded-full au-success-bg"><i className="text-4xl fa-solid fa-circle-check au-success-icon" /></div>
+              <p className="text-lg font-extrabold text-gray-800">Ticket Submitted!</p>
+              <p className="mt-1 text-sm text-gray-400">You'll receive a notification shortly.</p>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4">
-              {formError && <div className="p-3 bg-red-50 border border-red-100 rounded-xl text-sm text-red-600 flex items-center gap-2"><i className="fa-solid fa-circle-exclamation" /> {formError}</div>}
-
+              {formError && <div className="flex items-center gap-2 p-3 text-sm text-red-600 border border-red-100 bg-red-50 rounded-xl"><i className="fa-solid fa-circle-exclamation" /> {formError}</div>}
+ 
               {/* Student info strip */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 p-3 au-attachment-bg rounded-2xl border">
+              <div className="grid grid-cols-2 gap-3 p-3 border sm:grid-cols-4 au-attachment-bg rounded-2xl">
                 {[{ label: "Name", val: student?.name }, { label: "Email", val: student?.email }, { label: "Year Level", val: student?.yearLevel }, { label: "Section", val: student?.section }].map(f => (
                   <div key={f.label}><p className="text-xs au-breadcrumb-active font-bold mb-0.5">{f.label}</p><p className="text-xs font-extrabold text-gray-800 truncate">{f.val || "—"}</p></div>
                 ))}
               </div>
-
-              {/* ✅ Subject — shows ALL subjects agad, filters when category chosen */}
+ 
+              {/* Subject */}
               <div>
                 <label className="block text-xs font-bold text-gray-600 mb-1.5">
                   Subject <span className="text-red-400">*</span>
@@ -429,9 +453,7 @@ const NewTicketModal = ({ onClose, student }) => {
                     <span className="ml-1 text-gray-400 font-normal text-[10px]">(type your concern)</span>
                   )}
                 </label>
-
                 {!loadingCats && allSubjects.length > 0 ? (
-                  /* ✅ Dropdown — visible agad, nag-fi-filter kapag may napiling category */
                   <select name="subject" value={form.subject} onChange={handleSubjectChange} className={inp}>
                     <option value="">-- Select Subject --</option>
                     {filteredSubjects.map((s, i) => (
@@ -441,7 +463,6 @@ const NewTicketModal = ({ onClose, student }) => {
                     ))}
                   </select>
                 ) : (
-                  /* Fallback — free text if walang subjects sa Firestore */
                   <input
                     type="text"
                     name="subject"
@@ -452,7 +473,7 @@ const NewTicketModal = ({ onClose, student }) => {
                   />
                 )}
               </div>
-
+ 
               {/* Category + Priority */}
               <div className="grid grid-cols-2 gap-4">
                 <div>
@@ -470,51 +491,60 @@ const NewTicketModal = ({ onClose, student }) => {
                     </button>
                   )}
                 </div>
-                <div>
-                  <label className="block text-xs font-bold text-gray-600 mb-1.5">Priority</label>
-                  <select name="priority" value={form.priority} onChange={handle} className={inp}>
-                    <option>Low</option><option>Medium</option><option>High</option><option>Urgent</option>
-                  </select>
-                </div>
+              <div>
+  <label className="block text-xs font-bold text-gray-600 mb-1.5">
+    Priority
+    {loadingPrios && <i className="fa-solid fa-spinner fa-spin text-gray-300 ml-1 text-[10px]" />}
+  </label>
+  <select name="priority" value={form.priority} onChange={handle} className={inp} disabled={loadingPrios}>
+    {loadingPrios
+      ? <option value="">Loading...</option>
+      : <>
+          <option value="">-- Select Priority --</option>
+          {priorityOptions.map(p => <option key={p} value={p}>{p}</option>)}
+        </>
+    }
+  </select>
+</div>
               </div>
-
+ 
               {/* Description */}
               <div>
                 <label className="block text-xs font-bold text-gray-600 mb-1.5">Description <span className="text-red-400">*</span></label>
                 <textarea rows="5" name="description" value={form.description} onChange={handle} placeholder="Describe your concern in detail..." className={inp + " resize-none"} />
               </div>
-
+ 
               {/* Attachment */}
               <div>
-                <label className="block text-xs font-bold text-gray-600 mb-1.5">Attachment <span className="text-gray-400 font-normal">(optional · PNG, JPG, PDF · max 5 MB)</span></label>
+                <label className="block text-xs font-bold text-gray-600 mb-1.5">Attachment <span className="font-normal text-gray-400">(optional · PNG, JPG, PDF · max 5 MB)</span></label>
                 {!attachedFile ? (
                   <div onDragOver={(e) => { e.preventDefault(); setDragging(true); }} onDragLeave={() => setDragging(false)} onDrop={onDrop}
                     onClick={() => document.getElementById("modal-file-input").click()}
                     className={`border-2 border-dashed rounded-2xl py-6 text-center cursor-pointer select-none transition ${dragging ? "border-gray-400 bg-gray-50" : "border-gray-200 hover:border-gray-400 hover:bg-gray-50"}`}>
                     <i className="fa-solid fa-cloud-arrow-up text-2xl text-gray-300 block mb-1.5" />
-                    <p className="text-sm text-gray-500">Drag & drop or <span className="au-breadcrumb-active font-semibold">browse</span></p>
+                    <p className="text-sm text-gray-500">Drag & drop or <span className="font-semibold au-breadcrumb-active">browse</span></p>
                     <p className="text-xs text-gray-400 mt-0.5">PNG, JPG, PDF · Max 5 MB</p>
                     <input id="modal-file-input" type="file" accept=".png,.jpg,.jpeg,.pdf" className="hidden" onChange={onFileInput} />
                   </div>
                 ) : (
-                  <div className="flex items-center gap-3 p-3 au-attachment-bg border rounded-2xl">
-                    <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-sm shrink-0">
-                      {attachedFile.type === "application/pdf" ? <i className="fa-solid fa-file-pdf text-red-500 text-lg" /> : <i className="fa-solid fa-file-image text-blue-500 text-lg" />}
+                  <div className="flex items-center gap-3 p-3 border au-attachment-bg rounded-2xl">
+                    <div className="flex items-center justify-center w-10 h-10 bg-white shadow-sm rounded-xl shrink-0">
+                      {attachedFile.type === "application/pdf" ? <i className="text-lg text-red-500 fa-solid fa-file-pdf" /> : <i className="text-lg text-blue-500 fa-solid fa-file-image" />}
                     </div>
                     <div className="flex-1 min-w-0"><p className="text-sm font-bold text-gray-800 truncate">{attachedFile.name}</p><p className="text-xs text-gray-400">{formatBytes(attachedFile.size)}</p></div>
-                    <button type="button" onClick={() => { setAttach(null); setAErr(""); }} className="p-2 rounded-xl hover:bg-red-50 text-gray-400 hover:text-red-500 transition"><i className="fa-solid fa-xmark" /></button>
+                    <button type="button" onClick={() => { setAttach(null); setAErr(""); }} className="p-2 text-gray-400 transition rounded-xl hover:bg-red-50 hover:text-red-500"><i className="fa-solid fa-xmark" /></button>
                   </div>
                 )}
                 {attachError && <p className="text-xs text-red-500 mt-1.5 flex items-center gap-1"><i className="fa-solid fa-circle-exclamation" /> {attachError}</p>}
               </div>
-
+ 
               {/* Submit */}
               <div className="flex gap-3 pt-2">
                 <button type="submit" disabled={submitting}
-                  className="au-btn-primary flex-1 font-extrabold py-3 rounded-2xl text-sm transition flex items-center justify-center gap-2">
+                  className="flex items-center justify-center flex-1 gap-2 py-3 text-sm font-extrabold transition au-btn-primary rounded-2xl">
                   {submitting ? <><i className="fa-solid fa-spinner fa-spin" /> Submitting...</> : <><i className="fa-solid fa-paper-plane" /> Submit Ticket</>}
                 </button>
-                <button type="button" onClick={onClose} disabled={submitting} className="px-6 bg-gray-100 hover:bg-gray-200 text-gray-600 font-bold py-3 rounded-2xl text-sm transition">Cancel</button>
+                <button type="button" onClick={onClose} disabled={submitting} className="px-6 py-3 text-sm font-bold text-gray-600 transition bg-gray-100 hover:bg-gray-200 rounded-2xl">Cancel</button>
               </div>
             </form>
           )}
@@ -542,30 +572,30 @@ const Sidebar = ({ active, setActive, sidebarOpen, setSidebarOpen, studentName, 
   };
   return (
     <>
-      {sidebarOpen && <div className="au-overlay fixed inset-0 z-30 lg:hidden" onClick={() => setSidebarOpen(false)} />}
-      <aside className={`au-sidebar fixed top-16 left-0 h-[calc(100vh-64px)] w-64 flex flex-col z-40 transition-transform duration-300 shadow-2xl ${sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}`}>        <div className="p-4 au-border-bottom border-b">
-          <div className="au-user-card flex items-center gap-3 rounded-2xl p-3">
-            <div className="au-avatar-grad w-10 h-10 rounded-full overflow-hidden border-2 border-yellow-400 flex items-center justify-center shrink-0">
-              {studentPhoto ? <img src={studentPhoto} alt="avatar" className="w-full h-full object-cover" /> : <span className="text-white font-extrabold text-sm">{initials}</span>}
+      {sidebarOpen && <div className="fixed inset-0 z-30 au-overlay lg:hidden" onClick={() => setSidebarOpen(false)} />}
+      <aside className={`au-sidebar fixed top-16 left-0 h-[calc(100vh-64px)] w-64 flex flex-col z-40 transition-transform duration-300 shadow-2xl ${sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}`}>        <div className="p-4 border-b au-border-bottom">
+          <div className="flex items-center gap-3 p-3 au-user-card rounded-2xl">
+            <div className="flex items-center justify-center w-10 h-10 overflow-hidden border-2 border-yellow-400 rounded-full au-avatar-grad shrink-0">
+              {studentPhoto ? <img src={studentPhoto} alt="avatar" className="object-cover w-full h-full" /> : <span className="text-sm font-extrabold text-white">{initials}</span>}
             </div>
-            <div className="overflow-hidden"><p className="au-user-name font-bold text-sm truncate">{studentName || "Student"}</p><p className="au-user-badge font-semibold">Student Account</p></div>
+            <div className="overflow-hidden"><p className="text-sm font-bold truncate au-user-name">{studentName || "Student"}</p><p className="font-semibold au-user-badge">Student Account</p></div>
           </div>
         </div>
         <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
           <button onClick={() => { onNewTicket(); setSidebarOpen(false); }} className="au-new-ticket-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-bold transition mb-3">
-            <i className="fa-solid fa-plus-circle w-4 text-center text-sm" /><span>New Ticket</span>
+            <i className="w-4 text-sm text-center fa-solid fa-plus-circle" /><span>New Ticket</span>
           </button>
-          <p className="au-section-label text-xs font-extrabold uppercase tracking-widest px-3 mb-2">Main Menu</p>
+          <p className="px-3 mb-2 text-xs font-extrabold tracking-widest uppercase au-section-label">Main Menu</p>
           {navItems.map(item => <NavBtn key={item.key} item={item} />)}
-          <div className="pt-4 pb-2"><p className="au-section-label text-xs font-extrabold uppercase tracking-widest px-3 mb-2">Support</p></div>
+          <div className="pt-4 pb-2"><p className="px-3 mb-2 text-xs font-extrabold tracking-widest uppercase au-section-label">Support</p></div>
           {supportItems.map(item => <NavBtn key={item.key} item={item} />)}
         </nav>
-        <div className="p-4 au-border-top border-t space-y-3">
-          <button onClick={onLogout} className="au-logout-btn w-full flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm transition font-semibold"><i className="fa-solid fa-right-from-bracket text-sm" /> Sign Out</button>
-          <div className="au-help-card rounded-2xl p-4 text-white">
-            <p className="font-bold text-sm mb-1">Need urgent help?</p>
-            <p className="text-xs text-white/70 mb-2">Visit the registrar or call our hotline.</p>
-            <button className="au-contact-btn text-xs font-bold px-3 py-1.5 rounded-lg hover:shadow transition flex items-center gap-1.5"><i className="fa-solid fa-phone text-xs" /> Contact Us</button>
+        <div className="p-4 space-y-3 border-t au-border-top">
+          <button onClick={onLogout} className="au-logout-btn w-full flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm transition font-semibold"><i className="text-sm fa-solid fa-right-from-bracket" /> Sign Out</button>
+          <div className="p-4 text-white au-help-card rounded-2xl">
+            <p className="mb-1 text-sm font-bold">Need urgent help?</p>
+            <p className="mb-2 text-xs text-white/70">Visit the registrar or call our hotline.</p>
+            <button className="au-contact-btn text-xs font-bold px-3 py-1.5 rounded-lg hover:shadow transition flex items-center gap-1.5"><i className="text-xs fa-solid fa-phone" /> Contact Us</button>
           </div>
         </div>
       </aside>
@@ -579,21 +609,21 @@ const Sidebar = ({ active, setActive, sidebarOpen, setSidebarOpen, studentName, 
 const Header = ({ sidebarOpen, setSidebarOpen, studentName, studentPhoto, onLogout, onNewTicket, studentUid, onViewTicket }) => {
   const initials = studentName ? studentName.split(" ").map(n=>n[0]).join("").slice(0,2).toUpperCase() : "ST";
   return (
-    <header className="au-header h-16 flex items-center px-4 lg:px-6 gap-4 sticky top-0 z-50 shadow-lg">
-      <div className="au-topbar absolute top-0 left-0 right-0" />
-      <button onClick={() => setSidebarOpen(!sidebarOpen)} className="au-hamburger lg:hidden p-2 rounded-xl transition"><i className="fa-solid fa-bars text-lg" /></button>
+    <header className="sticky top-0 z-50 flex items-center h-16 gap-4 px-4 shadow-lg au-header lg:px-6">
+      <div className="absolute top-0 left-0 right-0 au-topbar" />
+      <button onClick={() => setSidebarOpen(!sidebarOpen)} className="p-2 transition au-hamburger lg:hidden rounded-xl"><i className="text-lg fa-solid fa-bars" /></button>
         <div className="flex items-center gap-2.5 mr-4">
         <img src="/itech.png" alt="iTech" style={{ height: "100px", width: "120px", objectFit: "contain", marginTop: "12px" }} />
       </div>
-      <div className="flex-1 max-w-sm hidden md:block">
+      <div className="flex-1 hidden max-w-sm md:block">
         <div className="relative">
-          <i className="fa-solid fa-magnifying-glass au-search-icon absolute left-3 top-1/2 -translate-y-1/2 text-sm" />
-          <input type="text" placeholder="Search tickets..." className="au-header w-full pl-9 pr-4 py-2 border rounded-xl text-sm focus:outline-none transition" />
+          <i className="absolute text-sm -translate-y-1/2 fa-solid fa-magnifying-glass au-search-icon left-3 top-1/2" />
+          <input type="text" placeholder="Search tickets..." className="w-full py-2 pr-4 text-sm transition border au-header pl-9 rounded-xl focus:outline-none" />
         </div>
       </div>
-      <div className="ml-auto flex items-center gap-1">
-        <button onClick={onNewTicket} className="au-btn-primary hidden sm:flex items-center gap-2 text-xs font-bold px-3 py-2 rounded-xl transition mr-2">
-          <i className="fa-solid fa-plus text-xs" /> New Ticket
+      <div className="flex items-center gap-1 ml-auto">
+        <button onClick={onNewTicket} className="items-center hidden gap-2 px-3 py-2 mr-2 text-xs font-bold transition au-btn-primary sm:flex rounded-xl">
+          <i className="text-xs fa-solid fa-plus" /> New Ticket
         </button>
         {studentUid && (
           <NotificationBell
@@ -605,17 +635,17 @@ const Header = ({ sidebarOpen, setSidebarOpen, studentName, studentPhoto, onLogo
             userPhoto={studentPhoto}
           />
         )}
-        <div className="au-divider w-px h-7 mx-1" style={{ background: "rgba(255,255,255,0.15)" }} />
+        <div className="w-px mx-1 au-divider h-7" style={{ background: "rgba(255,255,255,0.15)" }} />
         <div className="flex items-center gap-2.5 cursor-pointer px-2">
-          <div className="au-avatar-grad w-8 h-8 rounded-full overflow-hidden border-2 border-yellow-400 flex items-center justify-center shrink-0">
-            {studentPhoto ? <img src={studentPhoto} alt="avatar" className="w-full h-full object-cover" /> : <span className="text-white font-extrabold text-xs">{initials}</span>}
+          <div className="flex items-center justify-center w-8 h-8 overflow-hidden border-2 border-yellow-400 rounded-full au-avatar-grad shrink-0">
+            {studentPhoto ? <img src={studentPhoto} alt="avatar" className="object-cover w-full h-full" /> : <span className="text-xs font-extrabold text-white">{initials}</span>}
           </div>
           <div className="hidden sm:block">
-            <p className="au-user-name text-sm font-bold leading-none">{studentName || "Student"}</p>
+            <p className="text-sm font-bold leading-none au-user-name">{studentName || "Student"}</p>
             <p className="au-user-sub text-xs mt-0.5">Student Account</p>
           </div>
         </div>
-        <button onClick={onLogout} title="Sign Out" className="au-icon-btn p-2.5 rounded-xl transition"><i className="fa-solid fa-right-from-bracket text-base" /></button>
+        <button onClick={onLogout} title="Sign Out" className="au-icon-btn p-2.5 rounded-xl transition"><i className="text-base fa-solid fa-right-from-bracket" /></button>
       </div>
     </header>
   );
@@ -650,19 +680,19 @@ const DashboardHome = ({ student, setActive, tickets, onNewTicket, onViewTicket 
   const recentTickets = tickets.slice(0,5);
   return (
     <div className="space-y-6">
-      <div className="au-hero rounded-2xl p-6 relative overflow-hidden">
+      <div className="relative p-6 overflow-hidden au-hero rounded-2xl">
         <div className="absolute top-0 left-0 right-0 h-1" style={{ background:"linear-gradient(90deg,#DA1A32,#F0C330,#DA1A32)" }} />
         <div className="relative z-10">
-          <p className="text-white/60 text-sm mb-1"><i className="fa-solid fa-hand-wave mr-1" /> {greeting}</p>
-          <h2 className="text-white text-2xl font-extrabold mb-1">{student?.name||"Student"}!</h2>
-          <p className="text-white/60 text-sm">{student?.yearLevel}{student?.section&&` · ${student.section}`}{student?.email&&` · ${student.email}`}</p>
+          <p className="mb-1 text-sm text-white/60"><i className="mr-1 fa-solid fa-hand-wave" /> {greeting}</p>
+          <h2 className="mb-1 text-2xl font-extrabold text-white">{student?.name||"Student"}!</h2>
+          <p className="text-sm text-white/60">{student?.yearLevel}{student?.section&&` · ${student.section}`}{student?.email&&` · ${student.email}`}</p>
           <div className="flex gap-3 mt-4">
-            <button onClick={onNewTicket} className="au-hero-btn-solid text-sm font-extrabold px-4 py-2 rounded-xl hover:shadow-lg transition hover:-translate-y-0.5 flex items-center gap-2"><i className="fa-solid fa-plus text-xs" /> Submit Ticket</button>
-            <button onClick={()=>setActive("tickets")} className="au-hero-btn-outline text-sm font-bold px-4 py-2 rounded-xl transition flex items-center gap-2"><i className="fa-solid fa-ticket text-xs" /> My Tickets</button>
+            <button onClick={onNewTicket} className="au-hero-btn-solid text-sm font-extrabold px-4 py-2 rounded-xl hover:shadow-lg transition hover:-translate-y-0.5 flex items-center gap-2"><i className="text-xs fa-solid fa-plus" /> Submit Ticket</button>
+            <button onClick={()=>setActive("tickets")} className="flex items-center gap-2 px-4 py-2 text-sm font-bold transition au-hero-btn-outline rounded-xl"><i className="text-xs fa-solid fa-ticket" /> My Tickets</button>
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
         {stats.map(s=>(
           <div key={s.label} className="bg-white rounded-2xl p-5 border border-gray-100 hover:shadow-md hover:-translate-y-0.5 transition cursor-default">
             <div className="flex items-start justify-between mb-3">
@@ -674,34 +704,34 @@ const DashboardHome = ({ student, setActive, tickets, onNewTicket, onViewTicket 
           </div>
         ))}
       </div>
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 bg-white rounded-2xl border border-gray-100 overflow-hidden">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+        <div className="overflow-hidden bg-white border border-gray-100 lg:col-span-2 rounded-2xl">
           <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
-            <h3 className="font-extrabold text-gray-800 flex items-center gap-2"><i className="fa-solid fa-clock-rotate-left au-section-icon text-sm" /> Recent Tickets</h3>
-            <button onClick={()=>setActive("tickets")} className="text-xs au-breadcrumb-active hover:underline font-semibold">View all →</button>
+            <h3 className="flex items-center gap-2 font-extrabold text-gray-800"><i className="text-sm fa-solid fa-clock-rotate-left au-section-icon" /> Recent Tickets</h3>
+            <button onClick={()=>setActive("tickets")} className="text-xs font-semibold au-breadcrumb-active hover:underline">View all →</button>
           </div>
           {recentTickets.length===0?(
-            <div className="text-center py-12"><i className="fa-solid fa-ticket-simple text-4xl text-gray-200 block mb-3" /><p className="text-gray-400 text-sm">No tickets yet.</p></div>
+            <div className="py-12 text-center"><i className="block mb-3 text-4xl text-gray-200 fa-solid fa-ticket-simple" /><p className="text-sm text-gray-400">No tickets yet.</p></div>
           ):(
             <div className="divide-y divide-gray-50">
               {recentTickets.map(t=>(
-                <div key={t.id} className="flex items-center gap-4 px-6 py-3 hover:bg-gray-50 transition cursor-pointer" onClick={()=>onViewTicket(t.id)}>
+                <div key={t.id} className="flex items-center gap-4 px-6 py-3 transition cursor-pointer hover:bg-gray-50" onClick={()=>onViewTicket(t.id)}>
                   <div className={`w-2 h-2 rounded-full shrink-0 ${t.status==="Open"?"au-dot-open":t.status==="Pending"?"au-dot-pending":"au-dot-resolved"}`} />
                   <div className="flex-1 min-w-0"><p className="text-sm font-semibold text-gray-800 truncate">{t.subject}</p><p className="text-xs text-gray-400">{t.category} · #{t.ticketId}</p></div>
                   <Badge label={t.status} cls={statusStyle[t.status]||"bg-gray-100 text-gray-500"} />
-                  <i className="fa-solid fa-chevron-right text-xs text-gray-300" />
+                  <i className="text-xs text-gray-300 fa-solid fa-chevron-right" />
                 </div>
               ))}
             </div>
           )}
         </div>
         <div className="space-y-4">
-          <div className="bg-white rounded-2xl border border-gray-100 p-5">
-            <h3 className="font-extrabold text-gray-800 mb-4 flex items-center gap-2"><i className="fa-solid fa-bullhorn au-section-icon text-sm" /> Announcements</h3>
+          <div className="p-5 bg-white border border-gray-100 rounded-2xl">
+            <h3 className="flex items-center gap-2 mb-4 font-extrabold text-gray-800"><i className="text-sm fa-solid fa-bullhorn au-section-icon" /> Announcements</h3>
             <div className="space-y-3">{announcements.map(a=><div key={a.title} className={`p-3 rounded-xl border ${a.color}`}><p className={`text-sm font-bold ${a.titleCls} flex items-center gap-1.5`}><i className={`fa-solid ${a.icon} text-xs`} /> {a.title}</p><p className={`text-xs mt-0.5 ${a.subCls}`}>{a.sub}</p></div>)}</div>
           </div>
-          <div className="bg-white rounded-2xl border border-gray-100 p-5">
-            <h3 className="font-extrabold text-gray-800 mb-4 flex items-center gap-2"><i className="fa-solid fa-bolt text-amber-500 text-sm" /> Quick Actions</h3>
+          <div className="p-5 bg-white border border-gray-100 rounded-2xl">
+            <h3 className="flex items-center gap-2 mb-4 font-extrabold text-gray-800"><i className="text-sm fa-solid fa-bolt text-amber-500" /> Quick Actions</h3>
             <div className="grid grid-cols-2 gap-2">{quickActions.map(q=><button key={q.label} onClick={q.action} className={`flex flex-col items-center gap-2 p-3 rounded-xl transition ${q.cls}`}><i className={`fa-solid ${q.icon} text-lg`} /><span className="text-xs font-bold">{q.label}</span></button>)}</div>
           </div>
         </div>
@@ -719,33 +749,33 @@ const MyTickets = ({ tickets, loadingTickets, onNewTicket, onViewTicket }) => {
   const filtered = filter==="All" ? tickets : tickets.filter(t=>t.status===filter);
   return (
     <div>
-      <div className="flex items-center gap-2 text-xs text-gray-400 mb-4"><i className="fa-solid fa-house text-gray-300" /><span>/</span><span className="au-breadcrumb-active font-semibold">My Tickets</span></div>
+      <div className="flex items-center gap-2 mb-4 text-xs text-gray-400"><i className="text-gray-300 fa-solid fa-house" /><span>/</span><span className="font-semibold au-breadcrumb-active">My Tickets</span></div>
       <div className="flex items-center justify-between mb-5">
-        <h2 className="text-xl font-extrabold text-gray-900 flex items-center gap-2"><i className="fa-solid fa-ticket au-section-icon" /> My Tickets</h2>
-        <button onClick={onNewTicket} className="au-btn-primary text-sm font-bold px-4 py-2 rounded-xl transition flex items-center gap-2"><i className="fa-solid fa-plus text-xs" /> New Ticket</button>
+        <h2 className="flex items-center gap-2 text-xl font-extrabold text-gray-900"><i className="fa-solid fa-ticket au-section-icon" /> My Tickets</h2>
+        <button onClick={onNewTicket} className="flex items-center gap-2 px-4 py-2 text-sm font-bold transition au-btn-primary rounded-xl"><i className="text-xs fa-solid fa-plus" /> New Ticket</button>
       </div>
-      <div className="flex gap-2 mb-5 flex-wrap">
+      <div className="flex flex-wrap gap-2 mb-5">
         {filters.map(f=><button key={f} onClick={()=>setFilter(f)} className={`px-4 py-1.5 rounded-full text-sm font-bold transition ${filter===f?"au-filter-active":"bg-white border border-gray-200 text-gray-600 hover:border-gray-400"}`}>{f} ({f==="All"?tickets.length:tickets.filter(t=>t.status===f).length})</button>)}
       </div>
-      <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden">
+      <div className="overflow-hidden bg-white border border-gray-100 rounded-2xl">
         {loadingTickets?(
-          <div className="text-center py-12"><i className="fa-solid fa-spinner fa-spin au-section-icon text-3xl block mb-3" /><p className="text-gray-400 text-sm">Loading tickets...</p></div>
+          <div className="py-12 text-center"><i className="block mb-3 text-3xl fa-solid fa-spinner fa-spin au-section-icon" /><p className="text-sm text-gray-400">Loading tickets...</p></div>
         ):filtered.length===0?(
-          <div className="text-center py-12"><i className="fa-solid fa-ticket-simple text-4xl text-gray-200 block mb-3" /><p className="text-gray-500 text-sm font-semibold">No tickets found.</p><button onClick={onNewTicket} className="mt-3 text-sm au-breadcrumb-active hover:underline font-bold">Submit your first ticket →</button></div>
+          <div className="py-12 text-center"><i className="block mb-3 text-4xl text-gray-200 fa-solid fa-ticket-simple" /><p className="text-sm font-semibold text-gray-500">No tickets found.</p><button onClick={onNewTicket} className="mt-3 text-sm font-bold au-breadcrumb-active hover:underline">Submit your first ticket →</button></div>
         ):(
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
-              <thead className="bg-gray-50 text-xs text-gray-400 uppercase tracking-wider"><tr>{["Ticket ID","Subject","Category","Priority","Status","Date","Action"].map(h=><th key={h} className="px-5 py-3 text-left">{h}</th>)}</tr></thead>
+              <thead className="text-xs tracking-wider text-gray-400 uppercase bg-gray-50"><tr>{["Ticket ID","Subject","Category","Priority","Status","Date","Action"].map(h=><th key={h} className="px-5 py-3 text-left">{h}</th>)}</tr></thead>
               <tbody className="divide-y divide-gray-50">
                 {filtered.map(t=>(
-                  <tr key={t.id} className="hover:bg-gray-50 transition">
-                    <td className="px-5 py-3 font-mono au-ticket-id font-bold text-xs">#{t.ticketId}</td>
-                    <td className="px-5 py-3"><p className="font-semibold text-gray-800 max-w-[160px] truncate">{t.subject}</p>{t.hasAttachment&&<span className="text-xs text-gray-400 flex items-center gap-1 mt-0.5"><i className="fa-solid fa-paperclip text-xs" />{t.attachmentName}</span>}</td>
-                    <td className="px-5 py-3 text-gray-500 text-xs whitespace-nowrap">{t.category}</td>
+                  <tr key={t.id} className="transition hover:bg-gray-50">
+                    <td className="px-5 py-3 font-mono text-xs font-bold au-ticket-id">#{t.ticketId}</td>
+                    <td className="px-5 py-3"><p className="font-semibold text-gray-800 max-w-[160px] truncate">{t.subject}</p>{t.hasAttachment&&<span className="text-xs text-gray-400 flex items-center gap-1 mt-0.5"><i className="text-xs fa-solid fa-paperclip" />{t.attachmentName}</span>}</td>
+                    <td className="px-5 py-3 text-xs text-gray-500 whitespace-nowrap">{t.category}</td>
                     <td className="px-5 py-3"><Badge label={t.priority} cls={priorityStyle[t.priority]||"bg-gray-100 text-gray-500"} /></td>
                     <td className="px-5 py-3"><Badge label={t.status} cls={statusStyle[t.status]||"bg-gray-100 text-gray-500"} /></td>
-                    <td className="px-5 py-3 text-gray-400 text-xs whitespace-nowrap">{formatDate(t.createdAt)}</td>
-                    <td className="px-5 py-3"><button onClick={()=>onViewTicket(t.id)} className="au-view-btn flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold rounded-lg transition"><i className="fa-solid fa-eye text-xs" /> View</button></td>
+                    <td className="px-5 py-3 text-xs text-gray-400 whitespace-nowrap">{formatDate(t.createdAt)}</td>
+                    <td className="px-5 py-3"><button onClick={()=>onViewTicket(t.id)} className="au-view-btn flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold rounded-lg transition"><i className="text-xs fa-solid fa-eye" /> View</button></td>
                   </tr>
                 ))}
               </tbody>
@@ -816,20 +846,20 @@ const MyProfile = ({ student, setStudent }) => {
 
   return (
     <div className="max-w-2xl mx-auto">
-      <div className="flex items-center gap-2 text-xs text-gray-400 mb-4"><i className="fa-solid fa-house text-gray-300" /><span>/</span><span className="au-breadcrumb-active font-semibold">My Profile</span></div>
-      <div className="au-profile-banner rounded-2xl p-6 mb-5 relative overflow-hidden">
+      <div className="flex items-center gap-2 mb-4 text-xs text-gray-400"><i className="text-gray-300 fa-solid fa-house" /><span>/</span><span className="font-semibold au-breadcrumb-active">My Profile</span></div>
+      <div className="relative p-6 mb-5 overflow-hidden au-profile-banner rounded-2xl">
         <div className="absolute top-0 left-0 right-0 h-1" style={{ background: "linear-gradient(90deg,#F5D000,#DA1A32,#F5D000)" }} />
         <div className="flex items-center gap-4">
           <div className="relative group shrink-0">
-            <div onClick={() => fileRef.current?.click()} className="w-20 h-20 rounded-full overflow-hidden border-4 border-white/30 flex items-center justify-center cursor-pointer au-avatar-grad">
-              {student?.photoURL ? <img src={student.photoURL} alt="avatar" className="w-full h-full object-cover" /> : <span className="text-white font-extrabold text-2xl">{initials}</span>}
+            <div onClick={() => fileRef.current?.click()} className="flex items-center justify-center w-20 h-20 overflow-hidden border-4 rounded-full cursor-pointer border-white/30 au-avatar-grad">
+              {student?.photoURL ? <img src={student.photoURL} alt="avatar" className="object-cover w-full h-full" /> : <span className="text-2xl font-extrabold text-white">{initials}</span>}
             </div>
-            <button onClick={() => fileRef.current?.click()} className="au-camera-btn absolute -bottom-1 -right-1 w-7 h-7 rounded-full flex items-center justify-center shadow-lg"><i className="fa-solid fa-camera text-white text-xs" /></button>
+            <button onClick={() => fileRef.current?.click()} className="absolute flex items-center justify-center rounded-full shadow-lg au-camera-btn -bottom-1 -right-1 w-7 h-7"><i className="text-xs text-white fa-solid fa-camera" /></button>
             <input ref={fileRef} type="file" accept="image/*" onChange={handleImageChange} className="hidden" />
           </div>
           <div className="min-w-0">
-            <p className="text-white font-extrabold text-xl truncate">{student?.name || "Student"}</p>
-            <p className="text-white/60 text-sm truncate">{student?.email}</p>
+            <p className="text-xl font-extrabold text-white truncate">{student?.name || "Student"}</p>
+            <p className="text-sm truncate text-white/60">{student?.email}</p>
             <div className="flex gap-2 mt-1.5 flex-wrap">
               {student?.yearLevel && <span className="text-xs bg-white/15 text-white px-2 py-0.5 rounded-full font-semibold">{student.yearLevel}</span>}
               {student?.section   && <span className="text-xs bg-white/15 text-white px-2 py-0.5 rounded-full font-semibold">{student.section}</span>}
@@ -838,7 +868,7 @@ const MyProfile = ({ student, setStudent }) => {
           </div>
         </div>
       </div>
-      <div className="flex gap-1 mb-5 bg-gray-100 p-1 rounded-xl w-fit">
+      <div className="flex gap-1 p-1 mb-5 bg-gray-100 rounded-xl w-fit">
         {[{ id: "info", label: "Profile Info", icon: "fa-user" }, { id: "password", label: "Change Password", icon: "fa-lock" }].map(t => (
           <button key={t.id} onClick={() => setTab(t.id)} className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-bold transition ${tab === t.id ? "au-tab-active shadow-sm" : "text-gray-500 hover:text-gray-700"}`}>
             <i className={`fa-solid ${t.icon} text-xs`} /> {t.label}
@@ -846,11 +876,11 @@ const MyProfile = ({ student, setStudent }) => {
         ))}
       </div>
       {tab === "info" && (
-        <div className="bg-white rounded-2xl border border-gray-100 p-6">
-          {msg && <div className="mb-4 p-3 bg-green-50 border border-green-100 rounded-xl text-sm text-green-700 flex items-center gap-2"><i className="fa-solid fa-circle-check au-success-icon" /> {msg}</div>}
-          {err && <div className="mb-4 p-3 bg-red-50 border border-red-100 rounded-xl text-sm text-red-600 flex items-center gap-2"><i className="fa-solid fa-circle-exclamation" /> {err}</div>}
+        <div className="p-6 bg-white border border-gray-100 rounded-2xl">
+          {msg && <div className="flex items-center gap-2 p-3 mb-4 text-sm text-green-700 border border-green-100 bg-green-50 rounded-xl"><i className="fa-solid fa-circle-check au-success-icon" /> {msg}</div>}
+          {err && <div className="flex items-center gap-2 p-3 mb-4 text-sm text-red-600 border border-red-100 bg-red-50 rounded-xl"><i className="fa-solid fa-circle-exclamation" /> {err}</div>}
           <form onSubmit={handleSave} className="space-y-4">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div><label className="block text-xs font-bold text-gray-600 mb-1.5">Full Name</label><input type="text" value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} className={inp} placeholder="Your full name" /></div>
               <div><label className="block text-xs font-bold text-gray-600 mb-1.5">Email</label><input type="email" value={student?.email || ""} disabled className={`${inp} bg-gray-50 text-gray-400 cursor-not-allowed`} /></div>
               <div><label className="block text-xs font-bold text-gray-600 mb-1.5">Phone</label><input type="text" value={form.phone} onChange={e => setForm(f => ({ ...f, phone: e.target.value }))} className={inp} placeholder="+63 9XX XXX XXXX" /></div>
@@ -860,27 +890,27 @@ const MyProfile = ({ student, setStudent }) => {
               <div className="sm:col-span-2"><label className="block text-xs font-bold text-gray-600 mb-1.5">Address</label><input type="text" value={form.address} onChange={e => setForm(f => ({ ...f, address: e.target.value }))} className={inp} placeholder="Your address" /></div>
               <div className="sm:col-span-2"><label className="block text-xs font-bold text-gray-600 mb-1.5">Bio</label><textarea rows="3" value={form.bio} onChange={e => setForm(f => ({ ...f, bio: e.target.value }))} className={`${inp} resize-none`} placeholder="Tell us something about yourself..." /></div>
             </div>
-            <button type="submit" disabled={saving} className="au-btn-primary w-full py-3 rounded-xl text-sm font-extrabold transition flex items-center justify-center gap-2">
+            <button type="submit" disabled={saving} className="flex items-center justify-center w-full gap-2 py-3 text-sm font-extrabold transition au-btn-primary rounded-xl">
               {saving ? <><i className="fa-solid fa-spinner fa-spin" /> Saving...</> : <><i className="fa-solid fa-floppy-disk" /> Save Changes</>}
             </button>
           </form>
         </div>
       )}
       {tab === "password" && (
-        <div className="bg-white rounded-2xl border border-gray-100 p-6">
-          {pwMsg && <div className="mb-4 p-3 bg-green-50 border border-green-100 rounded-xl text-sm text-green-700 flex items-center gap-2"><i className="fa-solid fa-circle-check au-success-icon" /> {pwMsg}</div>}
-          {pwErr && <div className="mb-4 p-3 bg-red-50 border border-red-100 rounded-xl text-sm text-red-600 flex items-center gap-2"><i className="fa-solid fa-circle-exclamation" /> {pwErr}</div>}
+        <div className="p-6 bg-white border border-gray-100 rounded-2xl">
+          {pwMsg && <div className="flex items-center gap-2 p-3 mb-4 text-sm text-green-700 border border-green-100 bg-green-50 rounded-xl"><i className="fa-solid fa-circle-check au-success-icon" /> {pwMsg}</div>}
+          {pwErr && <div className="flex items-center gap-2 p-3 mb-4 text-sm text-red-600 border border-red-100 bg-red-50 rounded-xl"><i className="fa-solid fa-circle-exclamation" /> {pwErr}</div>}
           <form onSubmit={handleChangePassword} className="space-y-4">
             {[{ key: "current", label: "Current Password" }, { key: "newPw", label: "New Password" }, { key: "confirm", label: "Confirm New Password" }].map((f, i) => (
               <div key={f.key}>
                 <label className="block text-xs font-bold text-gray-600 mb-1.5">{f.label}</label>
                 <div className="relative">
                   <input type={showPw ? "text" : "password"} value={pwForm[f.key]} onChange={e => setPwForm(p => ({ ...p, [f.key]: e.target.value }))} className={`${inp} pr-16`} placeholder="••••••••" />
-                  {i === 0 && <button type="button" onClick={() => setShowPw(!showPw)} className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-gray-400 hover:text-gray-600 font-semibold">{showPw ? "Hide" : "Show"}</button>}
+                  {i === 0 && <button type="button" onClick={() => setShowPw(!showPw)} className="absolute text-xs font-semibold text-gray-400 -translate-y-1/2 right-3 top-1/2 hover:text-gray-600">{showPw ? "Hide" : "Show"}</button>}
                 </div>
               </div>
             ))}
-            <button type="submit" disabled={pwSaving} className="au-btn-primary w-full py-3 rounded-xl text-sm font-extrabold transition flex items-center justify-center gap-2">
+            <button type="submit" disabled={pwSaving} className="flex items-center justify-center w-full gap-2 py-3 text-sm font-extrabold transition au-btn-primary rounded-xl">
               {pwSaving ? <><i className="fa-solid fa-spinner fa-spin" /> Changing...</> : <><i className="fa-solid fa-key" /> Change Password</>}
             </button>
           </form>
@@ -943,8 +973,8 @@ const StudentDashboard = ({ setPage }) => {
   const viewingTicket = viewingTicketId ? tickets.find(t => t.id === viewingTicketId) || null : null;
 
   if (loading) return (
-    <div className="min-h-screen flex items-center justify-center" style={{ background:"#f0f2f5" }}>
-      <div className="text-center"><i className="fa-solid fa-spinner fa-spin au-section-icon text-5xl block mb-4" /><p className="text-gray-500 font-semibold">Loading your dashboard...</p></div>
+    <div className="flex items-center justify-center min-h-screen" style={{ background:"#f0f2f5" }}>
+      <div className="text-center"><i className="block mb-4 text-5xl fa-solid fa-spinner fa-spin au-section-icon" /><p className="font-semibold text-gray-500">Loading your dashboard...</p></div>
     </div>
   );
 
@@ -957,7 +987,7 @@ const StudentDashboard = ({ setPage }) => {
       case "faq":      return <FAQPage />;
       case "settings": return <SettingsPage student={student} onLogout={handleLogout} />;
       case "chat":     return <LiveChatPage student={student} />;
-      default: return <div className="text-center py-20"><i className="fa-solid fa-hammer text-5xl text-gray-200 block mb-4" /><p className="font-extrabold text-gray-600 text-lg">Coming Soon</p></div>;
+      default: return <div className="py-20 text-center"><i className="block mb-4 text-5xl text-gray-200 fa-solid fa-hammer" /><p className="text-lg font-extrabold text-gray-600">Coming Soon</p></div>;
     }
   };
 
@@ -967,7 +997,7 @@ const StudentDashboard = ({ setPage }) => {
       <AUStyle />
       {showNewTicket && <NewTicketModal onClose={()=>setShowNewTicket(false)} student={student} />}
       {viewingTicket && <TicketViewModal ticket={viewingTicket} onClose={()=>setViewingTicketId(null)} />}
-      <div className="au-main-bg min-h-screen flex flex-col">
+      <div className="flex flex-col min-h-screen au-main-bg">
         <Header
           sidebarOpen={sidebarOpen}
           setSidebarOpen={setSidebarOpen}
@@ -980,7 +1010,7 @@ const StudentDashboard = ({ setPage }) => {
         />
         <div className="flex flex-1 overflow-hidden">
           <Sidebar active={active} setActive={setActive} sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} studentName={student?.name} studentPhoto={student?.photoURL} onLogout={handleLogout} onNewTicket={()=>setShowNewTicket(true)} />
-          <main className="flex-1 overflow-y-auto p-4 lg:p-6 lg:ml-64">{renderContent()}</main>
+          <main className="flex-1 p-4 overflow-y-auto lg:p-6 lg:ml-64">{renderContent()}</main>
         </div>
       </div>
       <LiveChatBubble student={student} onMaximize={()=>setActive("chat")} />
